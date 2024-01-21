@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+from tkinter import *
+
 def generate():
     duration = 10 # time in seconds
     sampling_rate = 600 # ekg in hertz
@@ -42,7 +44,7 @@ def generate():
     t = np.concatenate((t_p, t_pq, t_qrs, t_st, t_t))
     np.savetxt('ekg.csv', np.column_stack((t, ekg_data)), delimiter=',', header='Time,EKG Amplitude', comments='')
 
-def plot():
+def plot(window):
     ekg_df = pd.read_csv('ekg.csv')
 
     plt.plot(ekg_df['Time'], ekg_df['EKG Amplitude'])
@@ -54,7 +56,24 @@ def plot():
     plt.ylim(-2, 5) 
     plt.show()
 
-    ekg_df.to_csv('ekg.csv', index=False)
+    plot_button = Button(master = window, 
+                     height = 2, 
+                     width = 10, 
+                    text = "Plot") 
+    plot_button.pack()
 
-generate()
-plot()
+    #ekg_df.to_csv('ekg.csv', index=False)
+
+
+def main():
+    window = Tk()
+
+    generate()
+    plot(window)
+
+    window.mainloop()
+
+    return 0
+
+if __name__ == '__main__':
+    main()
