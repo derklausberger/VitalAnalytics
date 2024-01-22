@@ -12,7 +12,7 @@ class MainApplication(ctk.CTk):
         ctk.CTk.__init__(self, *args, **kwargs)
         self.current_page = None
         self.title("Vital Analytics")
-        self.geometry("800x600")
+        self.geometry("920x1000")
 
         self.page_container = ctk.CTkFrame(self)
         self.page_container.pack(side="top", fill="both", expand=True)
@@ -48,6 +48,7 @@ class MainApplication(ctk.CTk):
     def destroy_previous_page(self):
         if self.current_page:
             self.current_page.pack_forget()
+
 
 def main():
     app = MainApplication()
