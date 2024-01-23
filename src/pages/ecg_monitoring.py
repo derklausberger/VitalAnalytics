@@ -13,7 +13,7 @@ class MonitoringPage(ctk.CTkFrame):
         self.controller = controller
         self.main_application = parents
         self.navigation_bar = NavigationBar(self, self.main_application, self.controller)
-        self.navigation_bar.pack(side="left", fill="y")
+        self.navigation_bar.pack(side="top", fill="y")
 
         self.load_widgets()
 
@@ -70,55 +70,44 @@ class MonitoringPage(ctk.CTkFrame):
         return fig
 
     def load_widgets(self):
-        ctk.set_appearance_mode("light")
-        ctk.set_default_color_theme("green")
+        label = ctk.CTkLabel(self, text="ECG Monitoring", height=50, bg_color="#40c2a2", text_color="white", font=('Lucida Sans', 18, 'bold'), width=800)
+        label.pack(pady=0, padx=0)
 
-        label = ctk.CTkLabel(self, text="ECG Monitoring")
-        label.pack(pady=20, padx=20)
+        reset_button = ctk.CTkButton(self, text="RESET", width=100, fg_color="#be383b", hover_color="#9D2E31", font=('Lucida Sans', 14), text_color="#ffffff")
+        reset_button.pack(side="top", padx=10, pady=10)
 
-        # Frame für Tabelle und Canvas
         table_frame = ctk.CTkFrame(self)
         table_frame.pack(fill="both", expand=True)
 
-        # Canvas für Tabelle
-        canvas = ctk.CTkCanvas(table_frame, width=600)
+        canvas = ctk.CTkCanvas(table_frame, width=600, bg="#40c2a2")
         canvas.pack(side="left", padx=20, pady=20, expand=True)
 
-        # Scrollbar für Canvas
         scrollbar = ctk.CTkScrollbar(table_frame, command=canvas.yview)
         scrollbar.pack(side="right", fill="y")
 
-        # Frame innerhalb des Canvas für die CTkEntry-Widgets
         table_entries_frame = ctk.CTkFrame(canvas)
         canvas.create_window((0, 0), window=table_entries_frame, anchor="nw")
 
-        # Liste der CTkEntry-Widgets von self.table()
         table_entries_list = self.table(table_entries_frame)
 
-        # Positioniere jedes CTkEntry-Widget einzeln
         for i, row_entries in enumerate(table_entries_list):
             for j, table_entry in enumerate(row_entries):
                 table_entry.grid(row=i, column=j)
 
-        # Konfiguriere das Canvas für die Scrollbar
         canvas.configure(yscrollcommand=scrollbar.set)
         table_entries_frame.update_idletasks()
         canvas.config(scrollregion=canvas.bbox("all"))
 
-        # Konfiguriere das Canvas, um auf die Größe des Frame zu reagieren
         canvas.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 
-        # Frame für Plot
         plot_frame = ctk.CTkFrame(self)
         plot_frame.pack(pady=20, padx=60, fill="both", expand=False)
 
-        # Canvas für Plot
         plot_canvas = FigureCanvasTkAgg(self.plot(), master=plot_frame)
         plot_canvas.draw()
         plot_canvas.get_tk_widget().pack(side="left", fill="both", expand=False)
 
     def table(self, parent_frame):
-        # Code für das Erstellen der Tabelle
         lst = [('Time(s)', 'ECG Amplitude', 'P-Wave', 'QRS-Complex', 'T-Wave', 'HF'),
                (2, 'Aaryan', 'Pune', 18, 'iwas', 'iwas'),
                (3, 'Vaishnavi', 'Mumbai', 20, 'iwas', 'iwas'),
