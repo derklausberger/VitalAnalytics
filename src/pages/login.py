@@ -18,13 +18,10 @@ class LoginPage(ctk.CTkFrame):
         password = self.password_entry.get()
 
         if check_login(username, password):
-<<<<<<< HEAD
             self.controller.show_page("homepage")
-=======
-            self.controller.show_page("ecgmonitoring")
+            # self.controller.show_page("ecgmonitoring")
             self.reset_entries()
 
->>>>>>> 9b6f0fca913b79c089a3d3c1e11fd3a852ae078a
         else:
             print("Login failed!")
 

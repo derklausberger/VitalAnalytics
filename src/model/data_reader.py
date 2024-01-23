@@ -39,7 +39,6 @@ def read_train_data_from_files():
     else:
         print(f'can not access file {record_file_path}')
 
-def
 
 def process_annotation(annotation):
     normal_rhythm = True
