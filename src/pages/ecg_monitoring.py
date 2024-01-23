@@ -2,9 +2,10 @@ import customtkinter as ctk
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import src.pages.home
 
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+from src.pages.home import HomePage
 
 class MonitoringPage(ctk.CTkFrame):
     def __init__(self, parents, controller):
@@ -56,7 +57,11 @@ class MonitoringPage(ctk.CTkFrame):
         np.savetxt('ekg.csv', np.column_stack((t, ekg_data)), delimiter=',', header='Time,EKG Amplitude', comments='')
 
     def plot(self):
-        ekg_df = pd.read_csv('ekg.csv')
+        try:
+            ekg_df = pd.read_csv('ekg.csv')
+        except FileNotFoundError:
+            print("MonitoringPage.plot: File 'ekg.csv' not found. Returning an empty figure.")
+            return plt.figure()
 
         fig, ax = plt.subplots()
 
@@ -68,6 +73,11 @@ class MonitoringPage(ctk.CTkFrame):
         ax.set_xlim(0, 10)
         ax.set_ylim(-2, 5)
         return fig
+    '''plot_button = Button(master = window, 
+                     height = 2, 
+                     width = 10, 
+                    text = "Plot") 
+    plot_button.pack()'''
 
     def load_widgets(self):
         ctk.set_appearance_mode("light")

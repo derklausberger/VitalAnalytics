@@ -19,8 +19,10 @@ def save_user_data(user_data):
 
 
 def check_login(user_data, password):
-    USER_DATA = load_user_data()
-    saved_password = USER_DATA.get(user_data)
+    user_dict = load_user_data()
+    saved_password = user_dict.get(user_data)
+
+    print(user_dict)
 
     if saved_password is not None and saved_password == password:
         return True

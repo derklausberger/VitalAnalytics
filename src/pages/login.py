@@ -1,4 +1,5 @@
 import customtkinter as ctk
+
 from src.utils.authentication import check_login
 
 
@@ -19,7 +20,7 @@ class LoginPage(ctk.CTkFrame):
         password = self.password_entry.get()
 
         if check_login(username, password):
-            self.controller.show_page("ecgmonitoring")
+            self.controller.show_page("homepage")
         else:
             print("Login failed!")
 
