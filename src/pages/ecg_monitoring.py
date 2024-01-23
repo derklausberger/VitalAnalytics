@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import mplcursors
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -60,13 +61,21 @@ class MonitoringPage(ctk.CTkFrame):
 
         fig, ax = plt.subplots()
 
-        ax.plot(ekg_df['Time'], ekg_df['EKG Amplitude'])
+        line, = ax.plot(ekg_df['Time'], ekg_df['EKG Amplitude'])
         ax.set_xlabel('time(s)')
         ax.set_ylabel('amplitude')
-        ax.set_title('data')
+        ax.set_title('EKG-Plot')
         ax.grid(True)
         ax.set_xlim(0, 10)
         ax.set_ylim(-2, 5)
+
+        def label_text(self):
+            index = int(self.index)
+            return f'Zeit: {ekg_df["Time"].iloc[index]:.2f}s\nAmplitude: {ekg_df["EKG Amplitude"].iloc[index]:.2f}'
+
+        # Aktivieren von mplcursors für den Line Plot
+        cursor = mplcursors.cursor(line, hover=True)
+        cursor.connect('add', lambda self: self.annotation.set_text(label_text(self)))
         return fig
 
     def load_widgets(self):

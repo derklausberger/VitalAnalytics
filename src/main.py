@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import messagebox
 
 import customtkinter as ctk
 
@@ -13,8 +14,11 @@ class MainApplication(ctk.CTk):
         ctk.CTk.__init__(self, *args, **kwargs)
         self.current_page = None
         self.title("Vital Analytics")
-        self.geometry("800x1000")
-        self.configure(fg_color="green")
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        x_position = (screen_width - 800) // 2
+        y_position = (screen_height - 1020) // 2
+        self.geometry(f'800x950+{x_position}+{y_position}')
         self.page_container = ctk.CTkFrame(self)
         self.page_container.pack(side="top", fill="both", expand=True)
 
