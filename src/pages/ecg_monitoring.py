@@ -5,18 +5,17 @@ import matplotlib.pyplot as plt
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from src.pages.home import HomePage
+from src.pages.navigation_bar import NavigationBar
 
 class MonitoringPage(ctk.CTkFrame):
     def __init__(self, parents, controller):
-        ctk.CTkFrame.__init__(self, parents)
-        # self.container = ctk.CTkFrame
-
+        super().__init__(parents)
         self.controller = controller
         self.main_application = parents
+        self.navigation_bar = NavigationBar(self, self.main_application, self.controller)
+        self.navigation_bar.pack(side="top", fill="y")
 
         self.load_widgets()
-        # self.container.pack(self)
 
     def generate(self):
         duration = 10  # time in seconds
@@ -73,29 +72,74 @@ class MonitoringPage(ctk.CTkFrame):
         ax.set_xlim(0, 10)
         ax.set_ylim(-2, 5)
         return fig
-    '''plot_button = Button(master = window, 
-                     height = 2, 
-                     width = 10, 
-                    text = "Plot") 
-    plot_button.pack()'''
 
     def load_widgets(self):
-        ctk.set_appearance_mode("light")
+        label = ctk.CTkLabel(self, text="ECG Monitoring", height=50, bg_color="#40c2a2", text_color="white", font=('Lucida Sans', 18, 'bold'), width=800)
+        label.pack(pady=0, padx=0)
 
-        ctk.set_default_color_theme("green")
+        reset_button = ctk.CTkButton(self, text="RESET", width=100, fg_color="#be383b", hover_color="#9D2E31", font=('Lucida Sans', 14), text_color="#ffffff")
+        reset_button.pack(side="top", padx=10, pady=10)
 
-        logout_button = ctk.CTkButton(master=self, text="Logout", command=self.logout)
-        logout_button.pack(pady=50, padx=20)
+        table_frame = ctk.CTkFrame(self)
+        table_frame.pack(fill="both", expand=True)
 
-        label = ctk.CTkLabel(self, text="ECG Monitoring")
-        label.pack(pady=50, padx=20)
+        canvas = ctk.CTkCanvas(table_frame, width=600, bg="#40c2a2")
+        canvas.pack(side="left", padx=20, pady=20, expand=True)
 
-        frame = ctk.CTkFrame(master=self)
-        frame.pack(pady=20, padx=60, fill="both", expand=True)
+        scrollbar = ctk.CTkScrollbar(table_frame, command=canvas.yview)
+        scrollbar.pack(side="right", fill="y")
 
-        canvas = FigureCanvasTkAgg(self.plot(), master=frame)
-        canvas.draw()
-        canvas.get_tk_widget().pack(side="left", fill="both", expand=True)
+        table_entries_frame = ctk.CTkFrame(canvas)
+        canvas.create_window((0, 0), window=table_entries_frame, anchor="nw")
 
-    def logout(self):
-        self.controller.show_page("loginpage")
+        table_entries_list = self.table(table_entries_frame)
+
+        for i, row_entries in enumerate(table_entries_list):
+            for j, table_entry in enumerate(row_entries):
+                table_entry.grid(row=i, column=j)
+
+        canvas.configure(yscrollcommand=scrollbar.set)
+        table_entries_frame.update_idletasks()
+        canvas.config(scrollregion=canvas.bbox("all"))
+
+        canvas.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
+        plot_frame = ctk.CTkFrame(self)
+        plot_frame.pack(pady=20, padx=60, fill="both", expand=False)
+
+        plot_canvas = FigureCanvasTkAgg(self.plot(), master=plot_frame)
+        plot_canvas.draw()
+        plot_canvas.get_tk_widget().pack(side="left", fill="both", expand=False)
+
+    def table(self, parent_frame):
+        lst = [('Time(s)', 'ECG Amplitude', 'P-Wave', 'QRS-Complex', 'T-Wave', 'HF'),
+               (2, 'Aaryan', 'Pune', 18, 'iwas', 'iwas'),
+               (3, 'Vaishnavi', 'Mumbai', 20, 'iwas', 'iwas'),
+               (4, 'Rachna', 'Mumbai', 21, 'iwas', 'iwas'),
+               (5, 'Shubham', 'Delhi', 21, 'iwas', 'iwas'),
+               (1, 'Raj', 'Mumbai', 19, 'iwas', 'iwas'),
+               (2, 'Aaryan', 'Pune', 18, 'iwas', 'iwas'),
+               (3, 'Vaishnavi', 'Mumbai', 20, 'iwas', 'iwas'),
+               (4, 'Rachna', 'Mumbai', 21, 'iwas', 'iwas'),
+               (5, 'Shubham', 'Delhi', 21, 'iwas', 'iwas'),
+               (1, 'Raj', 'Mumbai', 19, 'iwas', 'iwas'),
+               (2, 'Aaryan', 'Pune', 18, 'iwas', 'iwas'),
+               (3, 'Vaishnavi', 'Mumbai', 20, 'iwas', 'iwas'),
+               (4, 'Rachna', 'Mumbai', 21, 'iwas', 'iwas'),
+               (5, 'Shubham', 'Delhi', 21, 'iwas', 'iwas')]
+
+        total_rows = len(lst)
+        total_columns = len(lst[0])
+
+        table_entries = []
+
+        for i in range(total_rows):
+            row_entries = []
+            for j in range(total_columns):
+                table_entry = ctk.CTkEntry(parent_frame, width=100)
+                table_entry.grid(row=i, column=j)
+                table_entry.insert(0, lst[i][j])
+                row_entries.append(table_entry)
+            table_entries.append(row_entries)
+
+        return table_entries
