@@ -5,6 +5,7 @@ import customtkinter as ctk
 from src.pages.ecg_monitoring import MonitoringPage
 from src.pages.login import LoginPage
 from src.pages.home import HomePage
+from src.pages.patient_info import PatientInfoPage
 
 
 class MainApplication(ctk.CTk):
@@ -12,20 +13,21 @@ class MainApplication(ctk.CTk):
         ctk.CTk.__init__(self, *args, **kwargs)
         self.current_page = None
         self.title("Vital Analytics")
-        self.geometry("920x1000")
-
+        self.geometry("800x1000")
+        self.configure(fg_color="green")
         self.page_container = ctk.CTkFrame(self)
         self.page_container.pack(side="top", fill="both", expand=True)
 
         self.pages = {
             "homepage": HomePage(self.page_container, self),
             "loginpage": LoginPage(self.page_container, self),
-            "ecgmonitoring": MonitoringPage(self.page_container, self)
+            "ecgmonitoring": MonitoringPage(self.page_container, self),
+            "patientinfo": PatientInfoPage(self.page_container, self)
         }
 
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-        self.show_page("loginpage")
+        self.show_page("ecgmonitoring")
 
     def on_closing(self):
         exit()
@@ -40,10 +42,10 @@ class MainApplication(ctk.CTk):
 
             self.current_page = new_page
 
-            print(f"Die Seite {page_name} wird angezeigt.")
+            print(f"The page {page_name} is displayed.")
 
         else:
-            print(f"Die Seite {page_name} existiert nicht.")
+            print(f"The page {page_name} doesn't exist.")
 
     def destroy_previous_page(self):
         if self.current_page:
