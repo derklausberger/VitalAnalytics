@@ -89,6 +89,10 @@ class MonitoringPage(ctk.CTkFrame):
         reset_button = ctk.CTkButton(self, text="RESET", width=100, fg_color="#be383b", hover_color="#9D2E31", font=('Lucida Sans', 14), text_color="#ffffff")
         reset_button.pack(side="top", padx=10, pady=10)
 
+        category_label = ctk.CTkLabel(self, text="AFib/No AFib", fg_color="#40c2a2", width=100,
+                                    font=('Lucida Sans', 14), text_color="#ffffff")
+        category_label.pack(side="top", padx=10, pady=10)
+
         table_frame = ctk.CTkFrame(self)
         table_frame.pack(fill="both", expand=True)
 
