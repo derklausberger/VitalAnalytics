@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from src.pages.navigation_bar import NavigationBar
+import tkinter as tk
 
 class HomePage(ctk.CTkFrame):
     def __init__(self, parents, controller):
@@ -13,24 +14,23 @@ class HomePage(ctk.CTkFrame):
         self.create_widgets()
 
     def create_widgets(self):
-        welcome_label = ctk.CTkLabel(self, text="Welcome to \n Vital Analytics!", font=('Lucida Sans', 25, 'bold'), text_color="#ffffff", width=800, height=85, bg_color="#40c2a2")
-        welcome_label.pack(side="top", fill="y", padx=0, pady=0)
+        welcome_label = ctk.CTkLabel(self, text="Welcome to \n Vital Analytics!", font=('Lucida Sans', 25, 'bold'), text_color="#ffffff", width=1000, height=85, bg_color="#40c2a2")
+        welcome_label.pack(side="top", fill="x", padx=0, pady=0)
 
-        explain_label = ctk.CTkLabel(self, text="Purpose of this application", width=800, font=('Lucida Sans', 14))
-        explain_label.pack(pady=20, padx=10)
+        left_aligned_text = "Navigate to..." \
+                            "\n"\
+                            "\n ...Patient Information" \
+                            "\n \u2022 to specify the patient's gender (male/female)" \
+                            "\n \u2022 to specify if patient has blood pressure related issues" \
+                            "\n" \
+                            "\n ...ECG Monitoring" \
+                            "\n \u2022 consumes ECG data"\
+                            "\n \u2022 outputs classification (AFib or no AFib)" \
+                            "\n \u2022 values can be viewed as table and line plot"\
+                            "\n \u2022 resetting the values is also possible"
 
-        # Unterpunkte
-        subpoints_frame = ctk.CTkFrame(self)
-        subpoint1_label = ctk.CTkLabel(subpoints_frame, text="- displaying ecg simulation", font=('Lucida Sans', 14))
-        subpoint2_label = ctk.CTkLabel(subpoints_frame, text="- displaying atrial fibrillation in ecg", font=('Lucida Sans', 14))
-        subpoint3_label = ctk.CTkLabel(subpoints_frame, text="- showing differences in diagnoses", font=('Lucida Sans', 14))
+        description_label = tk.Label(self, text=left_aligned_text, anchor="c", justify="left", padx=10, pady=10, font=('Lucida Sans', 12))
+        description_label.pack(fill="x")
 
-        subpoints = [subpoint1_label, subpoint2_label, subpoint3_label]
-
-        for subpoint in subpoints:
-            subpoint.pack(anchor="w")
-
-        # Anordnen des Subpunkte-Frames
-        subpoints_frame.pack(pady=20, padx=20)
 
 

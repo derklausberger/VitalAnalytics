@@ -37,7 +37,7 @@ class MainApplication(ctk.CTk):
 
         self.protocol("WM_DELETE_WINDOW", on_closing)
 
-        self.show_page("ecgmonitoring")
+        self.show_page("homepage")
 
     def show_page(self, page_name):
         self.destroy_previous_page()
@@ -60,19 +60,19 @@ class MainApplication(ctk.CTk):
 
 def main():
     #chrisi braucht das:
-    #app = MainApplication()
-    #app.mainloop()
+    app = MainApplication()
+    app.mainloop()
 
     # niklas braucht das:
     # todo: normalize input data
-    X_train, y_train = read_train_data_from_files()
+    """X_train, y_train = read_train_data_from_files()
 
     X_train = np.array(X_train)
     y_train = np.array(y_train)
 
     gan_model = GAN(X_train, y_train)
-    gan_model.train(epochs=100)
-    gan_model.save_gan_model()
+    gan_model.train(epochs=10)
+    gan_model.save_gan_model()"""
     #gan_model.generate_samples()
     return 0
 
