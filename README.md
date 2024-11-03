@@ -3,3 +3,9 @@ Install packages:
 
 Write new packages into requirements.txt:
 - pip freeze > requirements.txt
+
+starten:
+alles installieren
+in cmd:
+cd src
+python main.py

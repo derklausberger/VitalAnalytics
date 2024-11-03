@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from src.pages.navigation_bar import NavigationBar
+from pages.navigation_bar import NavigationBar
 
 class HomePage(ctk.CTkFrame):
     def __init__(self, parents, controller):

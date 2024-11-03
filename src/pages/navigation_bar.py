@@ -20,4 +20,3 @@ class NavigationBar(ctk.CTkFrame):
 
         logout_button = ctk.CTkButton(self, text="Logout", fg_color="#be383b", hover_color="#9D2E31", font=('Lucida Sans', 14), text_color="#ffffff", command=lambda: self.main_app_instance.show_page("loginpage"))
         logout_button.pack(side="left", fill="x", padx=10)
-        print("lol")

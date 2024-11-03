@@ -1,6 +1,6 @@
 import customtkinter as ctk
 
-from src.utils.authentication import check_login
+from utils.authentication import check_login
 
 
 class LoginPage(ctk.CTkFrame):

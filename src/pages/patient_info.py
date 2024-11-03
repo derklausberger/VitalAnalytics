@@ -1,8 +1,8 @@
 from tkinter import ttk
 import tkinter as tk
-
 import customtkinter as ctk
-from src.pages.navigation_bar import NavigationBar
+
+from pages.navigation_bar import NavigationBar
 
 
 class PatientInfoPage(ctk.CTkFrame):
