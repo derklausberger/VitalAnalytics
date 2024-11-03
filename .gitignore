@@ -4,3 +4,4 @@ mit-bih-atrial-fibrillation-database-1.0.0
 .idea/*
 mit-bih-arrhythmia-database-1.0.0/x_mitdb/
 mit-bih-arrhythmia-database-1.0.0/mitdbdir/
+src/generator.keras
